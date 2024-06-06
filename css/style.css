@@ -1,0 +1,13 @@
+#container{
+
+   
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10rem;
+}
+
+
+.row{
+
+    width: 33%;
+}
