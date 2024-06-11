@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,18 +8,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
 
 
 
-    <div  id="container">
+    <div id="container">
 
+        <!--Se Añade la modal que luego sera cargada de manera dinamica en base al detalle que seleccione el usuario-->
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <h2 id="tituloModal"></h2> <!--Utilizo IDs para el contenido de carga dinamica en el script.js-->
+                <p class="tituloIngredientes">Ingredientes</p> <!--Utilizo class para poder darle estilos con el css-->
+                <p id="ingredientesModal"></p>
+                <p class="tituloPreparacion">Preparación</p>
+                <p id="contenidoModal"></p>
+                <img id="imagenModal" src="" alt="" style="max-width: 100%;">
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+            </div>
+        </div>
 
-     
-                    
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
