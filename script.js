@@ -28,7 +28,7 @@ const info = async () => {
                   <p>${trago.strCategory}</p>
                 </div>
                 <div class="card-action">
-                  <a class="waves-effect waves-light btn modal-trigger" href="#modal1" onclick="modalDetalle('${trago.strDrink}', '${trago.strInstructionsES}', '${trago.strIngredient1}')">Ver más del trago</a>
+                  <a class="waves-effect waves-light btn modal-trigger" href="#modal1" onclick="modalDetalle('${trago.strDrink}', '${trago.strInstructionsES}')">Ver más del trago</a>
                 </div>
               </div>
             </div>
@@ -46,14 +46,12 @@ const info = async () => {
 
 info();
 
-
-
 //Modal para el detalle del trago
 function modalDetalle(titulo, intrucciones, imagen, ingredientes) {
   document.getElementById('tituloModal').textContent = titulo;
   document.getElementById('contenidoModal').textContent = intrucciones;
-  document.getElementById('ingredientesModal').textContent = '<ul><li>${trago.strIngredient1</li></ul>';
   document.getElementById('imagenModal').src = imagen;
+
   var instance = M.Modal.getInstance(document.getElementById('modal1'));
   instance.open();
 }
