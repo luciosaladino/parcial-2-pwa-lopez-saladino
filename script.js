@@ -1,4 +1,12 @@
-
+if(navigator.serviceWorker) {
+  navigator.serviceWorker.register("worker.js")
+  .then((registration) => {
+      console.log("service worker registrado");
+  })
+  .catch((error) => {
+      console.log("service worker no registrado");
+  });
+}
 
 const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a"
 
@@ -54,13 +62,13 @@ function modalDetalle(idDrink) {
   fetch(detailUrl)
   .then(respuesta => {
     if (!respuesta.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error('ID incorrecto, proba con otro!');
     }
     return respuesta.json();
   })
   .then(data => {
     if (!data.drinks || data.drinks.length === 0) {
-      throw new Error('No drinks found');
+      throw new Error('No encontramos ese trago');
     }
 
 
