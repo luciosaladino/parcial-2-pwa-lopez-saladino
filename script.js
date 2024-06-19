@@ -28,7 +28,7 @@ const info = async () => {
                   <p>${trago.strCategory}</p>
                 </div>
                 <div class="card-action">
-                  <a class="waves-effect waves-light btn modal-trigger" href="#modal1" onclick="modalDetalle('${trago.strDrink}', '${trago.strInstructionsES}')">Ver más del trago</a>
+                 <a class="waves-effect waves-light btn modal-trigger" href="#modal1" onclick="modalDetalle('${trago.idDrink}')">Ver más del trago</a>
                 </div>
               </div>
             </div>
@@ -39,7 +39,7 @@ const info = async () => {
         const elems = document.querySelectorAll('.modal');
         M.Modal.init(elems);
 
-        console.log(trago)
+       console.log(trago)
       });
     })
 }
@@ -47,10 +47,44 @@ const info = async () => {
 info();
 
 //Modal para el detalle del trago
-function modalDetalle(titulo, intrucciones, imagen, ingredientes) {
-  document.getElementById('tituloModal').textContent = titulo;
-  document.getElementById('contenidoModal').textContent = intrucciones;
-  document.getElementById('imagenModal').src = imagen;
+function modalDetalle(idDrink) {
+
+  const detailUrl = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`;
+
+  fetch(detailUrl)
+  .then(respuesta => {
+    if (!respuesta.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return respuesta.json();
+  })
+  .then(data => {
+    if (!data.drinks || data.drinks.length === 0) {
+      throw new Error('No drinks found');
+    }
+
+
+    data.drinks.forEach(trago => {
+      
+       let ingredientesTrago= [];
+
+      for (let i = 1; i <= 15; i++) {
+        let ingredientes = trago[`strIngredient${i}`];
+        if (ingredientes) {
+            ingredientesTrago.push(ingredientes)
+        }
+    }
+
+      document.getElementById('imagenModal').src = trago.strDrinkThumb;
+      document.getElementById('tituloModal').textContent = trago.strDrink;
+      document.getElementById('ingredientesModal').textContent = ingredientesTrago;
+
+      document.getElementById('contenidoModal').textContent = trago.strInstructionsES;
+
+    });
+
+
+  });
 
   var instance = M.Modal.getInstance(document.getElementById('modal1'));
   instance.open();
