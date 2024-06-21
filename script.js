@@ -26,7 +26,7 @@ const info = async () => {
         contenedor.innerHTML += `  
             
             <div class="row">
-            <div class="col s12 m7">
+            <div class="col s12 m7 ">
               <div class="card">
                 <div class="card-image">
                   <img src="${trago.strDrinkThumb}">
@@ -47,7 +47,7 @@ const info = async () => {
         const elems = document.querySelectorAll('.modal');
         M.Modal.init(elems);
 
-       console.log(trago)
+       /*console.log(trago)*/
       });
     })
 }
