@@ -10,3 +10,14 @@
 .row{
     width: 30%;
 }
+
+
+
+.tituloIngredientes, .tituloPreparacion{
+ 
+  font-size: 2rem;
+  color: #333; 
+  margin-bottom: 15px; 
+  text-decoration: underline;
+  letter-spacing: 1px; 
+}
