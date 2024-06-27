@@ -1,6 +1,6 @@
 // Se importa la Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
-import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAxJIaCwa99X6qZYBXiwGs2djF7DAAZivQ",
@@ -104,14 +104,51 @@ function modalDetalle(idDrink) {
       document.getElementById('imagenModal').src = trago.strDrinkThumb;
       document.getElementById('tituloModal').textContent = trago.strDrink;
       document.getElementById('ingredientesModal').textContent = ingredientesTrago;
-
       document.getElementById('contenidoModal').textContent = trago.strInstructionsES;
 
+      cargarComentario(idDrink);
+
+      const formulario = document.getElementById('formulario')
+  formulario.onsubmit = async (e) =>{
+    e.preventDefault(); //Evita que se recargue la página al enviar el form
+    const nombreUsuario = document.getElementById('nombreUsuario');
+    const valoracion = document.getElementById('valoracion');
+    const comentario = document.getElementById('elComentario');
+
+    // Carga todos los datos el la base de datos de firestore
+    await addDoc(collection(db, `cocktails/${idDrink}/reviews`),{
+      nombreUsuario,
+      valoracion: parseInt(valoracion), // Se parsea el valor del rating de string -> number
+      comentario
     });
 
-
-  });
+    formulario.reset() // Resetea el form una vez que se envia el comentario
+    cargarComentario(idDrink);
+  }
 
   var instance = M.Modal.getInstance(document.getElementById('modal1'));
   instance.open();
+}
+
+    )});
+
+
+  };
+
+  
+
+  async function cargarComentario(idDrink){
+    const verComentario = document.getElementById('verComentario');
+    verComentario.innerHTML = '';
+
+    const consulta = query(collection(db `cocktails/${idDrink}/reviews`));
+    const losComentarios = await getDocs(consulta);
+    losComentarios.forEach((doc) =>{
+      const comentario = doc.data();
+      verComentario.innerHTML +=`
+            <div class="review">
+                <p>${review.userName} (${review.rating}/5): ${review.comment}</p>
+            </div>
+        `;
+  })
 }

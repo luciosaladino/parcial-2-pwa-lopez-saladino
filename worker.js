@@ -57,12 +57,12 @@ self.addEventListener("activate", () => {
 
 self.addEventListener("fetch", e => {
    // console.log("Fetch event para:", e.request.url);
-
-    e.respondWith(
-        caches.match(e.request).then(cachedResponse => {
-            if (cachedResponse) {
-                return cachedResponse;
-            }
+        if (e.request.url.startsWith('http') || e.request.url.startsWith('https')) { //Agregue este if ya que tenia un error de que no soporta chrome-extension
+            e.respondWith(
+                caches.match(e.request).then(cachedResponse => {
+                    if (cachedResponse) {
+                        return cachedResponse;
+                    }
 
             return fetch(e.request).then(networkResponse => {
                 return caches.open(version).then(cache => {
@@ -97,5 +97,4 @@ self.addEventListener("fetch", e => {
             }
         })
     );
-});
-
+}});
