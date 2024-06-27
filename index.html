@@ -25,6 +25,31 @@
                 <ul id="ingredientesModal"></ul>
                 <p class="tituloPreparacion">Preparación</p>
                 <p id="contenidoModal"></p>
+
+                <div class="seccionComentario">
+                    <h3>Comentarios</h3>
+                    <form id="formulario">
+                        <div class="usuario">
+                            <input type="text" id="nombreUsuario" placeholder="Julián" required>
+                            <label for="nombreUsuario">Nombre</label>
+                        </div>
+
+                        <div class="rating">
+                            <input type="number" min="1" max="5" id="valoracion" placeholder="1-5" required>
+                            <label for="valoracion">Valoración</label>
+                        </div>
+
+                        <div class="comentario">
+                            <textarea id="elComentario" class="materialize-textarea" required></textarea>
+                            <label for="elComentario">Comentario</label>
+                        </div>
+                        <button class="btn waves-effect waves-light" type="submit">Comentar</button>
+                    </form>
+
+                    <div id="verComentario">
+
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
