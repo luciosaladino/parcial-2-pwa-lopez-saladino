@@ -1,3 +1,21 @@
+// Se importa la Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
+import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAxJIaCwa99X6qZYBXiwGs2djF7DAAZivQ",
+  authDomain: "tragoapp-f02c6.firebaseapp.com",
+  projectId: "tragoapp-f02c6",
+  storageBucket: "tragoapp-f02c6.appspot.com",
+  messagingSenderId: "1068470432198",
+  appId: "1:1068470432198:web:0089d8422eef7a4ca102c7",
+  measurementId: "G-G4M88XBP9B"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
 if(navigator.serviceWorker) {
   navigator.serviceWorker.register("worker.js")
   .then((registration) => {
