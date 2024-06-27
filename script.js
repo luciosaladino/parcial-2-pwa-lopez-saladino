@@ -29,20 +29,13 @@ if(navigator.serviceWorker) {
 const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a"
 
 const info = async () => {
-
   const info = await fetch(url)
     .then(respuesta => respuesta.json())
     .then(data => {
 
-
       let contenedor = document.getElementById("container")
-
-
       data.drinks.forEach(trago => {
-
-
         contenedor.innerHTML += `  
-            
             <div class="row">
             <div class="col s12 m7 ">
               <div class="card">
@@ -59,22 +52,20 @@ const info = async () => {
               </div>
             </div>
           </div>
-          
-          `
+          `;
+      });
         //Inicializa las modales, lo requiere si o si Materialize, es parte de su documentación.
         const elems = document.querySelectorAll('.modal');
         M.Modal.init(elems);
-
-       /*console.log(trago)*/
-      });
     })
-}
+    .catch(error =>{
+      console.error("Error al obtener datos de la API", error);
+    });
+};
 
 info();
-
 //Modal para el detalle del trago
-function modalDetalle(idDrink) {
-
+async function modalDetalle(idDrink) {
   const detailUrl = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`;
 
   fetch(detailUrl)
@@ -109,11 +100,11 @@ function modalDetalle(idDrink) {
       cargarComentario(idDrink);
 
       const formulario = document.getElementById('formulario')
-  formulario.onsubmit = async (e) =>{
-    e.preventDefault(); //Evita que se recargue la página al enviar el form
-    const nombreUsuario = document.getElementById('nombreUsuario');
-    const valoracion = document.getElementById('valoracion');
-    const comentario = document.getElementById('elComentario');
+      formulario.onsubmit = async (e) =>{
+      e.preventDefault(); //Evita que se recargue la página al enviar el form
+      const nombreUsuario = document.getElementById('nombreUsuario');
+      const valoracion = document.getElementById('valoracion');
+      const comentario = document.getElementById('elComentario');
 
     // Carga todos los datos el la base de datos de firestore
     await addDoc(collection(db, `cocktails/${idDrink}/reviews`),{
@@ -124,18 +115,13 @@ function modalDetalle(idDrink) {
 
     formulario.reset() // Resetea el form una vez que se envia el comentario
     cargarComentario(idDrink);
-  }
-
-  var instance = M.Modal.getInstance(document.getElementById('modal1'));
-  instance.open();
-}
-
-    )});
-
-
   };
 
-  
+  const instance = M.Modal.getInstance(document.getElementById('modal1'));
+  instance.open(); 
+    }
+  )}
+)}
 
   async function cargarComentario(idDrink){
     const verComentario = document.getElementById('verComentario');
