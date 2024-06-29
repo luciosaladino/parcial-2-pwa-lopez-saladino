@@ -1,6 +1,6 @@
 // Se importa la Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, query, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAxJIaCwa99X6qZYBXiwGs2djF7DAAZivQ",
@@ -102,9 +102,9 @@ async function modalDetalle(idDrink) {
       const formulario = document.getElementById('formulario')
       formulario.onsubmit = async (e) =>{
       e.preventDefault(); //Evita que se recargue la página al enviar el form
-      const nombreUsuario = document.getElementById('nombreUsuario');
-      const valoracion = document.getElementById('valoracion');
-      const comentario = document.getElementById('elComentario');
+      const nombreUsuario = document.getElementById('nombreUsuario').value;
+      const valoracion = document.getElementById('valoracion').value;
+      const comentario = document.getElementById('elComentario').value;
 
     // Carga todos los datos el la base de datos de firestore
     await addDoc(collection(db, `cocktails/${idDrink}/reviews`),{
@@ -123,6 +123,8 @@ async function modalDetalle(idDrink) {
   )}
 )}
 
+window.modalDetalle = modalDetalle;
+
   async function cargarComentario(idDrink){
     const verComentario = document.getElementById('verComentario');
     verComentario.innerHTML = '';
@@ -133,7 +135,7 @@ async function modalDetalle(idDrink) {
       const comentario = doc.data();
       verComentario.innerHTML +=`
             <div class="review">
-                <p>${review.userName} (${review.rating}/5): ${review.comment}</p>
+                <p>${comentario.userName} (${comentario.rating}/5): ${comentario.comment}</p>
             </div>
         `;
   })
