@@ -123,20 +123,52 @@ async function modalDetalle(idDrink) {
   )}
 )}
 
-window.modalDetalle = modalDetalle;
+window.modalDetalle = modalDetalle; //Se utiliza el windows.modalDetalle para usar la funcion de manera global, ya que, esta dentro de un script type module.
 
   async function cargarComentario(idDrink){
     const verComentario = document.getElementById('verComentario');
     verComentario.innerHTML = '';
 
-    const consulta = query(collection(db `cocktails/${idDrink}/reviews`));
+    const consulta = query(collection(db, `cocktails/${idDrink}/reviews`));
     const losComentarios = await getDocs(consulta);
     losComentarios.forEach((doc) =>{
       const comentario = doc.data();
       verComentario.innerHTML +=`
             <div class="review">
-                <p>${comentario.userName} (${comentario.rating}/5): ${comentario.comment}</p>
+                <p>${comentario.nombreUsuario} (${comentario.valoracion}/5): ${comentario.comentario}</p>
             </div>
         `;
   })
+}
+
+//Hacemos el evento de instalación.
+let eventoInstalacion; //Se la define de manera global para usarla.
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  eventoInstalacion = e;
+  const botonInstalar = document.getElementById('botonInstalar');
+  botonInstalar.style.display = "inline-block";
+});
+
+const botonInstalar = document.getElementById('botonInstalar');
+botonInstalar.addEventListener("click", ()=>{
+  if(eventoInstalacion && eventoInstalacion.prompt)
+    eventoInstalacion.prompt()
+  .then((decision) =>{
+    const eleccion = decision.outcome;
+    if(eleccion == "dismissed"){
+      console.log("Has cancelado la instalación");
+    }else if(eleccion == "accepted"){
+      console.log("Has instalado la APP");
+      ocultarBotonInstalar();
+    }
+  })
+})
+
+const ocultarBotonInstalar =() =>{
+  botonInstalar.style.display = "none";
+}
+
+if(eventoInstalacion == null){
+  ocultarBotonInstalar();
 }
